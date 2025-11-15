@@ -1,9 +1,13 @@
-# MAS-Pro: Microsoft Activation Scripts Professional v1.0
+# MAS-Pro: Microsoft Activation Scripts Professional v2.1
 
+**Version:** 2.1.0  
 **Author:** Abu Naser Khan (joyelkhan)  
-**Repository:** https://github.com/joyelkhan/MAS-Pro
+**Repository:** https://github.com/joyelkhan/MAS-Pro  
+**Status:** ✅ Production Ready
 
 Professional-grade activation engine for Windows 11, Windows 10, Server, and Microsoft Office. Incorporates advanced techniques from leading open-source projects with enterprise-level reliability, intelligent method orchestration, comprehensive system analysis, and zero-touch deployment.
+
+**New in v2.1.0:** Enhanced installation system, robust download validation, update detection, desktop shortcuts, advanced security detection, Microsoft 365 support, and professional error handling.
 
 ## Features
 
