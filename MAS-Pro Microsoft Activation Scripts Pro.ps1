@@ -1,43 +1,234 @@
 <#
 .SYNOPSIS
-    MAS-Pro: Microsoft Activation Scripts Professional
+    MAS-Pro: Microsoft Activation Scripts Professional v1.0
 .DESCRIPTION
     Professional-grade activation engine for Windows 11, Windows 10, Server, and Microsoft Office.
+    One-click installation and execution from GitHub repository.
     Incorporates advanced techniques from leading open-source projects with enterprise-level reliability.
-    Features intelligent method orchestration, comprehensive system analysis, and zero-touch deployment.
 .NOTES
-    Version: 2.0.0
-    Author: MAS-Pro Team
-    Website: https://github.com/massgravel/Microsoft-Activation-Scripts
-    Integrated Innovations:
+    Version: 1.0.0
+    Author: Abu Naser Khan (joyelkhan)
+    Repository: https://github.com/joyelkhan/MAS-Pro
+    One-Line Install: 
+    irm https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro.ps1 | iex
+    
+    Credits:
     - MASSGRAVEL/MAS (HWID/KMS38 Core Technology)
-    - Nirevil/windows-activation (Ohook Office Integration)  
+    - Nirevil/windows-activation (Ohook Office Integration)
     - TGSAN/CMWTAT_Digital_Edition (Enterprise UI/UX)
     - elitekamrul/MAS (Multi-Method Orchestration)
-    LEGAL: For educational and testing purposes only. Use only on systems you own.
 #>
 
-#Requires -RunAsAdministrator
+#region One-Click Installation Functions
+function Install-MASPro {
+    <#
+    .SYNOPSIS
+        One-click MAS-Pro installation from GitHub
+    .DESCRIPTION
+        Downloads and installs MAS-Pro locally for offline use and easy access
+    #>
+    
+    Write-Host "`n[MAS-PRO] Installing MAS-Pro Professional Edition..." -ForegroundColor Cyan
+    
+    $installPaths = @(
+        "$env:USERPROFILE\Desktop\MAS-Pro.ps1",
+        "$env:USERPROFILE\Documents\MAS-Pro.ps1",
+        "$env:SystemDrive\MAS-Pro\MAS-Pro.ps1"
+    )
+    
+    $scriptUrl = "https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro.ps1"
+    
+    try {
+        Write-Host "[DOWNLOAD] Fetching latest MAS-Pro from GitHub..." -ForegroundColor Yellow
+        
+        # Download the script
+        $webClient = New-Object System.Net.WebClient
+        $webClient.Headers.Add("User-Agent", "MAS-Pro-Installer")
+        $scriptContent = $webClient.DownloadString($scriptUrl)
+        
+        # Install to multiple locations for redundancy
+        $successCount = 0
+        foreach ($path in $installPaths) {
+            try {
+                $directory = Split-Path $path -Parent
+                if (!(Test-Path $directory)) {
+                    New-Item -ItemType Directory -Path $directory -Force | Out-Null
+                }
+                
+                $scriptContent | Out-File -FilePath $path -Encoding UTF8
+                if (Test-Path $path) {
+                    Write-Host "[INSTALL] Installed to: $path" -ForegroundColor Green
+                    $successCount++
+                }
+            }
+            catch {
+                Write-Host "[INSTALL] Failed to install to: $path" -ForegroundColor Red
+            }
+        }
+        
+        if ($successCount -gt 0) {
+            Write-Host "`n✅ MAS-Pro installed successfully!" -ForegroundColor Green
+            Write-Host "📁 Locations installed:" -ForegroundColor Cyan
+            foreach ($path in $installPaths) {
+                if (Test-Path $path) {
+                    Write-Host "   → $path" -ForegroundColor White
+                }
+            }
+            
+            Write-Host "`n🚀 To run MAS-Pro:" -ForegroundColor Yellow
+            Write-Host "   PowerShell -ExecutionPolicy Bypass -File `"$($installPaths[0])`"" -ForegroundColor White
+            Write-Host "   OR Right-click → Run with PowerShell" -ForegroundColor White
+            
+            # Offer to run immediately
+            $runNow = Read-Host "`n🎯 Run MAS-Pro now? (Y/N)"
+            if ($runNow -eq 'Y' -or $runNow -eq 'y') {
+                Write-Host "`n🚀 Launching MAS-Pro..." -ForegroundColor Green
+                Start-Process "powershell" -ArgumentList "-ExecutionPolicy Bypass -File `"$($installPaths[0])`"" -Wait
+            }
+        }
+    }
+    catch {
+        Write-Host "[ERROR] Failed to download MAS-Pro: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "📡 Please check your internet connection and try again." -ForegroundColor Yellow
+    }
+}
 
-$ErrorActionPreference = 'SilentlyContinue'
-$host.UI.RawUI.WindowTitle = "MAS-Pro: Microsoft Activation Scripts Professional v2.0"
-Clear-Host
+function Show-InstallationMenu {
+    <#
+    .SYNOPSIS
+        Displays installation options menu
+    #>
+    
+    Clear-Host
+    Write-Host "`n"
+    Write-Host "▄▄▄█████▓ ▄▄▄       ▄████▄   █    ██  ██▓███  " -ForegroundColor Blue
+    Write-Host "▓  ██▒ ▓▒▒████▄    ▒██▀ ▀█   ██  ▓██▒▓██░  ██▒" -ForegroundColor Blue
+    Write-Host "▒ ▓██░ ▒░▒██  ▀█▄  ▒▓█    ▄ ▓██  ▒██░▓██░ ██▓▒" -ForegroundColor Blue
+    Write-Host "░ ▓██▓ ░ ░██▄▄▄▄██ ▒▓▓▄ ▄██▒▓▓█  ░██░▒██▄█▓▒ ▒" -ForegroundColor Blue
+    Write-Host "  ▒██▒ ░  ▓█   ▓██▒▒ ▓███▀ ░▒▒█████▓ ▒██▒ ░  ░" -ForegroundColor Blue
+    Write-Host "  ▒ ░░    ▒▒   ▓▒█░░ ░▒ ▒  ░░▒▓▒ ▒ ▒ ▒▓▒░ ░  ░" -ForegroundColor Blue
+    Write-Host "    ░      ▒   ▒▒ ░  ░  ▒   ░░▒░ ░ ░ ░▒ ░     " -ForegroundColor Blue
+    Write-Host "  ░        ░   ▒   ░         ░░░ ░ ░ ░░       " -ForegroundColor Blue
+    Write-Host "               ░  ░░ ░         ░             " -ForegroundColor Blue
+    Write-Host "                   ░                          " -ForegroundColor Blue
+    Write-Host "`n"
+    Write-Host "    Microsoft Activation Scripts Professional v2.0" -ForegroundColor White
+    Write-Host "    One-Click Installation & Activation" -ForegroundColor Gray
+    Write-Host "    Repository: https://github.com/joyelkhan/MAS-Pro" -ForegroundColor Cyan
+    Write-Host "`n"
+    Write-Host "=" * 60 -ForegroundColor Blue
+    Write-Host "📦 INSTALLATION OPTIONS" -ForegroundColor Yellow
+    Write-Host "=" * 60 -ForegroundColor Blue
+    Write-Host "`n"
+    Write-Host "1️⃣  [1] Install MAS-Pro Locally (Recommended)" -ForegroundColor Green
+    Write-Host "    → Downloads to Desktop & Documents for offline use`n" -ForegroundColor Gray
+    
+    Write-Host "2️⃣  [2] Run MAS-Pro Once (Online Mode)" -ForegroundColor Green
+    Write-Host "    → Executes directly from GitHub`n" -ForegroundColor Gray
+    
+    Write-Host "3️⃣  [3] View Documentation" -ForegroundColor Green
+    Write-Host "    → Opens GitHub repository`n" -ForegroundColor Gray
+    
+    Write-Host "4️⃣  [4] Exit`n" -ForegroundColor Green
+    
+    Write-Host "💡 Tip: Option 1 is recommended for permanent installation" -ForegroundColor Cyan
+    Write-Host "`n"
+}
 
-#region Professional ASCII Art with Branding
-Write-Host "▄▄▄█████▓ ▄▄▄       ▄████▄   █    ██  ██▓███  " -ForegroundColor Blue
-Write-Host "▓  ██▒ ▓▒▒████▄    ▒██▀ ▀█   ██  ▓██▒▓██░  ██▒" -ForegroundColor Blue
-Write-Host "▒ ▓██░ ▒░▒██  ▀█▄  ▒▓█    ▄ ▓██  ▒██░▓██░ ██▓▒" -ForegroundColor Blue
-Write-Host "░ ▓██▓ ░ ░██▄▄▄▄██ ▒▓▓▄ ▄██▒▓▓█  ░██░▒██▄█▓▒ ▒" -ForegroundColor Blue
-Write-Host "  ▒██▒ ░  ▓█   ▓██▒▒ ▓███▀ ░▒▒█████▓ ▒██▒ ░  ░" -ForegroundColor Blue
-Write-Host "  ▒ ░░    ▒▒   ▓▒█░░ ░▒ ▒  ░░▒▓▒ ▒ ▒ ▒▓▒░ ░  ░" -ForegroundColor Blue
-Write-Host "    ░      ▒   ▒▒ ░  ░  ▒   ░░▒░ ░ ░ ░▒ ░     " -ForegroundColor Blue
-Write-Host "  ░        ░   ▒   ░         ░░░ ░ ░ ░░       " -ForegroundColor Blue
-Write-Host "               ░  ░░ ░         ░             " -ForegroundColor Blue
-Write-Host "                   ░                          " -ForegroundColor Blue
-Write-Host "`n"
-Write-Host "    Microsoft Activation Scripts Professional v2.0" -ForegroundColor White
-Write-Host "    Enterprise-Grade Windows & Office Activation" -ForegroundColor Gray
-Write-Host "`n"
+function Start-OnlineMASPro {
+    <#
+    .SYNOPSIS
+        Runs MAS-Pro directly from GitHub without installation
+    #>
+    
+    Write-Host "`n🌐 Starting MAS-Pro Online Mode..." -ForegroundColor Cyan
+    Write-Host "📡 Downloading latest version from GitHub..." -ForegroundColor Yellow
+    
+    try {
+        $scriptUrl = "https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro.ps1"
+        Invoke-Expression (Invoke-WebRequest -Uri $scriptUrl -UseBasicParsing).Content
+    }
+    catch {
+        Write-Host "[ERROR] Failed to run online mode: $($_.Exception.Message)" -ForegroundColor Red
+        Write-Host "📡 Please check your internet connection and try again." -ForegroundColor Yellow
+        Write-Host "💡 Try the local installation option for offline use." -ForegroundColor Cyan
+    }
+}
+
+function Open-MASProDocumentation {
+    <#
+    .SYNOPSIS
+        Opens MAS-Pro GitHub repository in default browser
+    #>
+    
+    Write-Host "`n📚 Opening MAS-Pro Documentation..." -ForegroundColor Cyan
+    
+    try {
+        Start-Process "https://github.com/joyelkhan/MAS-Pro"
+        Write-Host "✅ GitHub repository opened in your browser." -ForegroundColor Green
+        Write-Host "📖 Check the README for detailed usage instructions." -ForegroundColor Yellow
+    }
+    catch {
+        Write-Host "[ERROR] Failed to open browser." -ForegroundColor Red
+        Write-Host "🌐 Manual URL: https://github.com/joyelkhan/MAS-Pro" -ForegroundColor Cyan
+    }
+}
+#endregion
+
+#region Main Installation Logic
+if ($args[0] -eq "-Install" -or $args[0] -eq "-i") {
+    Install-MASPro
+    exit
+}
+
+if ($args[0] -eq "-Online" -or $args[0] -eq "-o") {
+    Start-OnlineMASPro
+    exit
+}
+
+if ($args[0] -eq "-Help" -or $args[0] -eq "-h") {
+    Show-InstallationMenu
+    
+    $choice = Read-Host "`n🎯 Select option (1-4)"
+    switch ($choice) {
+        "1" { Install-MASPro }
+        "2" { Start-OnlineMASPro }
+        "3" { Open-MASProDocumentation }
+        "4" { 
+            Write-Host "`n👋 Thank you for using MAS-Pro!" -ForegroundColor Cyan
+            Write-Host "🌐 Visit: https://github.com/joyelkhan/MAS-Pro" -ForegroundColor Yellow
+            exit 
+        }
+        default { 
+            Write-Host "`n❌ Invalid option. Starting MAS-Pro directly..." -ForegroundColor Red
+            # Continue to main activation script
+        }
+    }
+}
+
+# If no installation arguments, check if this is first run
+$isFirstRun = $false
+$localCopies = @(
+    "$env:USERPROFILE\Desktop\MAS-Pro.ps1",
+    "$env:USERPROFILE\Documents\MAS-Pro.ps1", 
+    "$env:SystemDrive\MAS-Pro\MAS-Pro.ps1"
+)
+
+if (-not ($localCopies | Where-Object { Test-Path $_ })) {
+    $isFirstRun = $true
+}
+
+if ($isFirstRun -and $args.Count -eq 0) {
+    Write-Host "`n🎉 Welcome to MAS-Pro Professional Edition!" -ForegroundColor Cyan
+    Write-Host "📦 It looks like this is your first time running MAS-Pro." -ForegroundColor Yellow
+    Write-Host "💡 For best experience, we recommend installing locally.`n" -ForegroundColor White
+    
+    $installChoice = Read-Host "Install MAS-Pro locally for easy offline access? (Y/N)"
+    if ($installChoice -eq 'Y' -or $installChoice -eq 'y') {
+        Install-MASPro
+        exit
+    }
+}
 #endregion
 
 #region Enhanced System Analysis with Windows 11 Support
@@ -554,13 +745,42 @@ function Start-ProfessionalOrchestration {
 #endregion
 
 #region Professional Main Execution
-Write-Host "[MAS-PRO] Initializing Professional Activation Engine v2.0..." -ForegroundColor Magenta
+# Check if we should show installation menu or proceed with activation
+if ($args.Count -eq 0 -and -not $isFirstRun) {
+    # Proceed directly to activation if already installed
+    Write-Host "`n"
+    Write-Host "▄▄▄█████▓ ▄▄▄       ▄████▄   █    ██  ██▓███  " -ForegroundColor Blue
+    Write-Host "▓  ██▒ ▓▒▒████▄    ▒██▀ ▀█   ██  ▓██▒▓██░  ██▒" -ForegroundColor Blue
+    Write-Host "▒ ▓██░ ▒░▒██  ▀█▄  ▒▓█    ▄ ▓██  ▒██░▓██░ ██▓▒" -ForegroundColor Blue
+    Write-Host "░ ▓██▓ ░ ░██▄▄▄▄██ ▒▓▓▄ ▄██▒▓▓█  ░██░▒██▄█▓▒ ▒" -ForegroundColor Blue
+    Write-Host "  ▒██▒ ░  ▓█   ▓██▒▒ ▓███▀ ░▒▒█████▓ ▒██▒ ░  ░" -ForegroundColor Blue
+    Write-Host "  ▒ ░░    ▒▒   ▓▒█░░ ░▒ ▒  ░░▒▓▒ ▒ ▒ ▒▓▒░ ░  ░" -ForegroundColor Blue
+    Write-Host "    ░      ▒   ▒▒ ░  ░  ▒   ░░▒░ ░ ░ ░▒ ░     " -ForegroundColor Blue
+    Write-Host "  ░        ░   ▒   ░         ░░░ ░ ░ ░░       " -ForegroundColor Blue
+    Write-Host "               ░  ░░ ░         ░             " -ForegroundColor Blue
+    Write-Host "                   ░                          " -ForegroundColor Blue
+    Write-Host "`n"
+    Write-Host "    Microsoft Activation Scripts Professional v1.0" -ForegroundColor White
+    Write-Host "    Enterprise-Grade Windows & Office Activation" -ForegroundColor Gray
+    Write-Host "    Repository: https://github.com/joyelkhan/MAS-Pro" -ForegroundColor Cyan
+    Write-Host "    Author: Abu Naser Khan" -ForegroundColor Cyan
+    Write-Host "`n"
+}
+
+Write-Host "[MAS-PRO] Initializing Professional Activation Engine v1.0..." -ForegroundColor Magenta
 
 # Enterprise Admin Check
 $currentPrincipal = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
 if (-not $currentPrincipal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
     Write-Host "[SECURITY] ELEVATION REQUIRED: Enterprise execution requires Administrator privileges." -ForegroundColor Red
     Write-Host "[SECURITY] Right-click and select 'Run as Administrator' or use enterprise deployment tools." -ForegroundColor Red
+    
+    # Offer to restart as admin
+    $restartAsAdmin = Read-Host "`nRestart as Administrator? (Y/N)"
+    if ($restartAsAdmin -eq 'Y' -or $restartAsAdmin -eq 'y') {
+        Start-Process "powershell" -ArgumentList "-ExecutionPolicy Bypass -File `"$PSCommandPath`"" -Verb RunAs
+        exit
+    }
     exit 1
 }
 
@@ -657,6 +877,21 @@ if ($script:systemProfile.OfficeInstalled) {
     }
 }
 
+# Quick Reactivation Option
+if ((-not $winLicensed) -or ($script:systemProfile.OfficeInstalled -and -not $officeLicensed)) {
+    Write-Host "`n[QUICK FIX] Some activations may need retry..." -ForegroundColor Yellow
+    $retryChoice = Read-Host "Attempt quick reactivation? (Y/N)"
+    if ($retryChoice -eq 'Y' -or $retryChoice -eq 'y') {
+        Write-Host "`n[QUICK REACTIVATION] Running optimized activation..." -ForegroundColor Cyan
+        $quickResults = Start-ProfessionalOrchestration -Strategy $activationStrategy
+        
+        # Update status
+        $winStatus = & "$env:SystemRoot\System32\slmgr.vbs" /dli 2>&1
+        $winLicensed = $winStatus -match "licensed|activated"
+        Write-Host "[REACTIVATION] Windows: $(if ($winLicensed) { 'ACTIVATED' } else { 'FAILED' })" -ForegroundColor $(if ($winLicensed) { 'Green' } else { 'Red' })
+    }
+}
+
 # Professional Safety Measures
 try {
     $restorePoint = Checkpoint-Computer -Description "MAS-Pro Pre-Activation $(Get-Date -Format 'yyyy-MM-dd HH:mm')" -ErrorAction SilentlyContinue
@@ -667,10 +902,63 @@ try {
     Write-Host "[SAFETY] Restore point creation not available on this system" -ForegroundColor Gray
 }
 
+# Installation Reminder for First-Time Users
+if ($isFirstRun) {
+    Write-Host "`n[INSTALLATION REMINDER]" -ForegroundColor Cyan
+    Write-Host "💡 This was run in temporary mode. For permanent installation:" -ForegroundColor Yellow
+    Write-Host "   PowerShell -ExecutionPolicy Bypass -File `"MAS-Pro.ps1`" -Install" -ForegroundColor White
+    Write-Host "   OR visit: https://github.com/joyelkhan/MAS-Pro" -ForegroundColor White
+}
+
 Write-Host "`n[MAS-PRO] Professional activation sequence completed." -ForegroundColor Magenta
 Write-Host "[MAS-PRO] Enterprise-grade reliability for Windows and Office activation." -ForegroundColor Gray
-Write-Host "[MAS-PRO] https://github.com/massgravel/Microsoft-Activation-Scripts" -ForegroundColor Blue
+Write-Host "[MAS-PRO] https://github.com/joyelkhan/MAS-Pro-Microsoft-Activation-Scripts-Professional" -ForegroundColor Blue
 
-# Professional Cleanup
+# Usage Instructions
+Write-Host "`n[USAGE INSTRUCTIONS]" -ForegroundColor Cyan
+Write-Host "🔧 One-Line Installation:" -ForegroundColor Yellow
+Write-Host "   irm https://raw.githubusercontent.com/joyelkhan/MAS-Pro-Microsoft-Activation-Scripts-Professional/main/MAS-Pro.ps1 | iex" -ForegroundColor White
+
+Write-Host "`n🚀 One-Line Activation (Direct):" -ForegroundColor Yellow
+Write-Host "   irm https://raw.githubusercontent.com/joyelkhan/MAS-Pro-Microsoft-Activation-Scripts-Professional/main/MAS-Pro.ps1 | iex" -ForegroundColor White
+
+Write-Host "`n💾 Local Installation:" -ForegroundColor Yellow
+Write-Host "   PowerShell -ExecutionPolicy Bypass -File `"MAS-Pro.ps1`" -Install" -ForegroundColor White
+
+Write-Host "`n🌐 Online Mode:" -ForegroundColor Yellow
+Write-Host "   PowerShell -ExecutionPolicy Bypass -File `"MAS-Pro.ps1`" -Online" -ForegroundColor White
+
+# Final Recommendations
+if (-not $winLicensed) {
+    Write-Host "`n⚠️  RECOMMENDATION" -ForegroundColor Red
+    Write-Host "   Windows activation failed. Try:" -ForegroundColor Yellow
+    Write-Host "   1. Ensure stable internet connection" -ForegroundColor White
+    Write-Host "   2. Run as Administrator" -ForegroundColor White
+    Write-Host "   3. Disable antivirus temporarily" -ForegroundColor White
+    Write-Host "   4. Use local installation method" -ForegroundColor White
+}
+
+Write-Host "`n✅ MAS-Pro execution complete. Check status above." -ForegroundColor Green
+
+# Auto-cleanup for temporary files
+try {
+    $tempFiles = @(
+        "$env:TEMP\maspro_ohook",
+        "$env:TEMP\ohook_enhanced",
+        "$env:TEMP\ohook_setup"
+    )
+    
+    foreach ($tempFile in $tempFiles) {
+        if (Test-Path $tempFile) {
+            Remove-Item -Path $tempFile -Recurse -Force -ErrorAction SilentlyContinue
+        }
+    }
+    Write-Host "[CLEANUP] Temporary files removed" -ForegroundColor Gray
+} catch {
+    # Silent cleanup failure
+}
+
+# Restore default error handling
 $ErrorActionPreference = 'Continue'
 #endregion
+}
