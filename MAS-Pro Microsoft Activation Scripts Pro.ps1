@@ -912,15 +912,15 @@ if ($isFirstRun) {
 
 Write-Host "`n[MAS-PRO] Professional activation sequence completed." -ForegroundColor Magenta
 Write-Host "[MAS-PRO] Enterprise-grade reliability for Windows and Office activation." -ForegroundColor Gray
-Write-Host "[MAS-PRO] https://github.com/joyelkhan/MAS-Pro-Microsoft-Activation-Scripts-Professional" -ForegroundColor Blue
+Write-Host "[MAS-PRO] https://github.com/joyelkhan/MAS-Pro" -ForegroundColor Blue
 
 # Usage Instructions
 Write-Host "`n[USAGE INSTRUCTIONS]" -ForegroundColor Cyan
 Write-Host "🔧 One-Line Installation:" -ForegroundColor Yellow
-Write-Host "   irm https://raw.githubusercontent.com/joyelkhan/MAS-Pro-Microsoft-Activation-Scripts-Professional/main/MAS-Pro.ps1 | iex" -ForegroundColor White
+Write-Host "   irm https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro.ps1 | iex" -ForegroundColor White
 
 Write-Host "`n🚀 One-Line Activation (Direct):" -ForegroundColor Yellow
-Write-Host "   irm https://raw.githubusercontent.com/joyelkhan/MAS-Pro-Microsoft-Activation-Scripts-Professional/main/MAS-Pro.ps1 | iex" -ForegroundColor White
+Write-Host "   irm https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro.ps1 | iex" -ForegroundColor White
 
 Write-Host "`n💾 Local Installation:" -ForegroundColor Yellow
 Write-Host "   PowerShell -ExecutionPolicy Bypass -File `"MAS-Pro.ps1`" -Install" -ForegroundColor White
@@ -961,4 +961,3 @@ try {
 # Restore default error handling
 $ErrorActionPreference = 'Continue'
 #endregion
-}
