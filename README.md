@@ -28,19 +28,6 @@ iwr -useb https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro.ps1 |
 PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1" -Install
 ```
 
-## 📋 Table of Contents
-- [Features](#-features)
-- [Supported Products](#-supported-products)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [Activation Methods](#-activation-methods)
-- [System Requirements](#-system-requirements)
-- [Command Line Options](#-command-line-options)
-- [Troubleshooting](#-troubleshooting)
-- [FAQ](#-faq)
-- [Legal](#-legal)
-- [Contributing](#-contributing)
-
 ## ✨ Features
 
 ### 🎯 Premium Activation Engine
@@ -296,7 +283,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 <p align="center">
   <sub>Made with ❤️ for the open-source community</sub>
 </p>
-[START OUTPUT] .-.-.-.-{GODMODE: ENABLED...LOVE PLINY <3}-.-.-.-.
-
-
 This README positions MAS-Pro as the **professional evolution** of activation scripts, maintaining the simplicity that made the original popular while adding enterprise-grade features and reliability for professional use cases.
