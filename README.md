@@ -24,20 +24,172 @@ Professional-grade activation engine for Windows 11, Windows 10, Server, and Mic
 - **.NET Framework 4.5+** (included with modern Windows)
 - **Internet connection** (optional, for online methods)
 
-## Usage
+## Usage Examples
 
-1. **Run as Administrator:**
-   ```powershell
-   powershell -ExecutionPolicy Bypass -File "MAS-Pro Microsoft Activation Scripts Pro.ps1"
-   ```
+### For End Users (Easiest)
 
-2. **Or right-click the script and select "Run as Administrator"** (required for professional execution)
+**One-Line Installation & Activation:**
+```powershell
+irm https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro.ps1 | iex
+```
 
-3. The script will:
-   - Analyze your system configuration
-   - Determine optimal activation methods
-   - Execute activation with automatic fallbacks
-   - Report detailed status and success metrics
+**Or Download & Run Locally:**
+1. Download `MAS-Pro.ps1` from GitHub
+2. Right-click → "Run with PowerShell"
+3. Select option 1 for installation
+4. Script handles everything automatically
+
+**Quick Start (Already Installed):**
+```powershell
+PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1"
+```
+
+### For Advanced Users
+
+**Installation with Custom Path:**
+```powershell
+PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1" -Install
+# Installs to: Desktop, Documents, C:\MAS-Pro\
+```
+
+**Online Mode (Direct from GitHub):**
+```powershell
+PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1" -Online
+```
+
+**Interactive Menu:**
+```powershell
+PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1" -Help
+# Shows: Install, Run Online, View Docs, Exit
+```
+
+**View Documentation:**
+```powershell
+PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1" -Help
+# Option 3: Opens GitHub repository
+```
+
+### For Enterprise Deployment
+
+**Silent Installation (No Prompts):**
+```powershell
+PowerShell -ExecutionPolicy Bypass -NoProfile -Command {
+    $scriptUrl = 'https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro.ps1'
+    Invoke-Expression (Invoke-WebRequest -Uri $scriptUrl -UseBasicParsing).Content
+}
+```
+
+**Batch Deployment Script:**
+```powershell
+# Deploy to multiple machines
+$computers = @("PC1", "PC2", "PC3")
+$scriptPath = "\\server\share\MAS-Pro.ps1"
+
+foreach ($computer in $computers) {
+    Invoke-Command -ComputerName $computer -ScriptBlock {
+        PowerShell -ExecutionPolicy Bypass -File $using:scriptPath
+    }
+}
+```
+
+**Scheduled Task Activation:**
+```powershell
+# Create scheduled task for automatic activation
+$action = New-ScheduledTaskAction -Execute "PowerShell.exe" `
+    -Argument "-ExecutionPolicy Bypass -File 'C:\MAS-Pro\MAS-Pro.ps1'"
+$trigger = New-ScheduledTaskTrigger -AtStartup
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "MAS-Pro-Activation"
+```
+
+**Group Policy Deployment:**
+```powershell
+# Deploy via Group Policy (requires admin)
+Copy-Item "MAS-Pro.ps1" "\\domain\SYSVOL\policies\scripts\"
+# Configure GPO to run script at startup/logon
+```
+
+### For System Administrators
+
+**Verify Activation Status:**
+```powershell
+# Check Windows activation
+slmgr /dli
+
+# Check Office activation
+cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
+```
+
+**Reactivate System:**
+```powershell
+# Quick reactivation with retry
+PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1"
+# Select option 1 from menu for quick reactivation
+```
+
+**Troubleshooting:**
+```powershell
+# Run with verbose output
+PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1" -Verbose
+
+# Check system profile
+Get-WmiObject Win32_OperatingSystem | Select-Object Caption, Version, BuildNumber
+```
+
+### For Developers & Contributors
+
+**Clone Repository:**
+```powershell
+git clone https://github.com/joyelkhan/MAS-Pro.git
+cd MAS-Pro
+```
+
+**Test Locally:**
+```powershell
+PowerShell -ExecutionPolicy Bypass -File "MAS-Pro Microsoft Activation Scripts Pro.ps1"
+```
+
+**Modify & Test:**
+```powershell
+# Edit the script
+notepad "MAS-Pro Microsoft Activation Scripts Pro.ps1"
+
+# Test changes
+PowerShell -ExecutionPolicy Bypass -File "MAS-Pro Microsoft Activation Scripts Pro.ps1"
+```
+
+**Submit Changes:**
+```powershell
+git add .
+git commit -m "Description of changes"
+git push origin main
+```
+
+### Command-Line Arguments
+
+| Argument | Usage | Example |
+|----------|-------|---------|
+| `-Install` or `-i` | Install locally | `MAS-Pro.ps1 -Install` |
+| `-Online` or `-o` | Run from GitHub | `MAS-Pro.ps1 -Online` |
+| `-Help` or `-h` | Show menu | `MAS-Pro.ps1 -Help` |
+| (none) | Auto-detect & run | `MAS-Pro.ps1` |
+
+### Execution Policies
+
+**Temporary (Current Session Only):**
+```powershell
+PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1"
+```
+
+**Permanent (All Sessions):**
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+PowerShell -File "MAS-Pro.ps1"
+```
+
+**Restore Default:**
+```powershell
+Set-ExecutionPolicy -ExecutionPolicy Restricted -Scope CurrentUser
+```
 
 ## How It Works
 

@@ -136,34 +136,106 @@ Methods execute by priority weight:
 
 ## Usage Examples
 
-### First-Time User
+### For End Users (Simplest)
+
+**One-Line Installation:**
 ```powershell
-PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1"
-# Shows interactive menu with installation options
+irm https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro.ps1 | iex
 ```
 
-### Quick Activation (Already Installed)
-```powershell
-PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1"
-# Proceeds directly to activation
-```
+**Download & Run:**
+1. Download from GitHub
+2. Right-click → Run with PowerShell
+3. Select option from menu
+4. Done!
 
-### Install Locally
+### For Advanced Users
+
+**Install Locally:**
 ```powershell
 PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1" -Install
-# Installs to Desktop, Documents, and C:\MAS-Pro\
+# Installs to: Desktop, Documents, C:\MAS-Pro\
 ```
 
-### Online Mode
+**Run Online (Direct):**
 ```powershell
 PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1" -Online
-# Downloads and executes directly from GitHub
 ```
 
-### Help Menu
+**Interactive Menu:**
 ```powershell
 PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1" -Help
-# Shows installation options menu
+```
+
+### For Enterprise Deployment
+
+**Silent Installation:**
+```powershell
+PowerShell -ExecutionPolicy Bypass -NoProfile -Command {
+    $url = 'https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro.ps1'
+    Invoke-Expression (Invoke-WebRequest -Uri $url -UseBasicParsing).Content
+}
+```
+
+**Batch Deployment:**
+```powershell
+$computers = @("PC1", "PC2", "PC3")
+foreach ($computer in $computers) {
+    Invoke-Command -ComputerName $computer -ScriptBlock {
+        PowerShell -ExecutionPolicy Bypass -File "\\server\share\MAS-Pro.ps1"
+    }
+}
+```
+
+**Scheduled Task:**
+```powershell
+$action = New-ScheduledTaskAction -Execute "PowerShell.exe" `
+    -Argument "-ExecutionPolicy Bypass -File 'C:\MAS-Pro\MAS-Pro.ps1'"
+$trigger = New-ScheduledTaskTrigger -AtStartup
+Register-ScheduledTask -Action $action -Trigger $trigger -TaskName "MAS-Pro"
+```
+
+**Group Policy:**
+```powershell
+Copy-Item "MAS-Pro.ps1" "\\domain\SYSVOL\policies\scripts\"
+# Configure GPO to run at startup/logon
+```
+
+### For System Administrators
+
+**Check Activation Status:**
+```powershell
+# Windows
+slmgr /dli
+
+# Office
+cscript "C:\Program Files\Microsoft Office\Office16\ospp.vbs" /dstatus
+```
+
+**Reactivate:**
+```powershell
+PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1"
+```
+
+**Troubleshoot:**
+```powershell
+Get-WmiObject Win32_OperatingSystem | Select-Object Caption, Version, BuildNumber
+```
+
+### For Developers
+
+**Clone & Test:**
+```powershell
+git clone https://github.com/joyelkhan/MAS-Pro.git
+cd MAS-Pro
+PowerShell -ExecutionPolicy Bypass -File "MAS-Pro Microsoft Activation Scripts Pro.ps1"
+```
+
+**Contribute:**
+```powershell
+git add .
+git commit -m "Your changes"
+git push origin main
 ```
 
 ---
