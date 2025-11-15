@@ -15,8 +15,11 @@ if ([string]::IsNullOrEmpty($PSScriptRoot)) {
     # Running online - download full script directly
     Write-Host "[MAS-PRO] Running in online mode..." -ForegroundColor Cyan
     try {
-        $scriptUrl = "https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro%20Microsoft%20Activation%20Scripts%20Pro.ps1"
-        Invoke-Expression (Invoke-WebRequest -Uri $scriptUrl -UseBasicParsing).Content
+        # Add cache-busting parameter with timestamp
+        $timestamp = [System.DateTime]::UtcNow.Ticks
+        $scriptUrl = "https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro%20Microsoft%20Activation%20Scripts%20Pro.ps1?t=$timestamp"
+        $scriptContent = (Invoke-WebRequest -Uri $scriptUrl -UseBasicParsing).Content
+        Invoke-Expression $scriptContent
     }
     catch {
         Write-Host "[ERROR] Failed to download full script: $($_.Exception.Message)" -ForegroundColor Red
@@ -34,8 +37,11 @@ if ([string]::IsNullOrEmpty($PSScriptRoot)) {
         Write-Host "`nTrying to download from GitHub..." -ForegroundColor Cyan
         
         try {
-            $scriptUrl = "https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro%20Microsoft%20Activation%20Scripts%20Pro.ps1"
-            Invoke-Expression (Invoke-WebRequest -Uri $scriptUrl -UseBasicParsing).Content
+            # Add cache-busting parameter with timestamp
+            $timestamp = [System.DateTime]::UtcNow.Ticks
+            $scriptUrl = "https://raw.githubusercontent.com/joyelkhan/MAS-Pro/main/MAS-Pro%20Microsoft%20Activation%20Scripts%20Pro.ps1?t=$timestamp"
+            $scriptContent = (Invoke-WebRequest -Uri $scriptUrl -UseBasicParsing).Content
+            Invoke-Expression $scriptContent
         }
         catch {
             Write-Host "[ERROR] Failed to download: $($_.Exception.Message)" -ForegroundColor Red
