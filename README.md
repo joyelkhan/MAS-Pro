@@ -288,50 +288,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Ensure compliance with local laws and Microsoft Terms of Service
 - Intended for educational and testing environments
 
-## 🤝 Contributing
-
-We welcome contributions from the community!
-
-### How to Contribute
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### Development Setup
-```bash
-# Clone repository
-git clone https://github.com/joyelkhan/MAS-Pro.git
-cd MAS-Pro
-
-# Test execution
-PowerShell -ExecutionPolicy Bypass -File "MAS-Pro.ps1" -Help
-```
-
-### Reporting Issues
-Please report bugs and feature requests via [GitHub Issues](https://github.com/joyelkhan/MAS-Pro/issues).
-
-## 📞 Support
-
-### Documentation
-- 📚 [Full Documentation](https://github.com/joyelkhan/MAS-Pro/wiki)
-- 🎥 [Video Tutorials](https://github.com/joyelkhan/MAS-Pro/wiki/Video-Tutorials)
-- ❓ [FAQ](https://github.com/joyelkhan/MAS-Pro/wiki/FAQ)
-
-### Community
-- 💬 [Discussions](https://github.com/joyelkhan/MAS-Pro/discussions)
-- 🐛 [Issue Tracker](https://github.com/joyelkhan/MAS-Pro/issues)
-- 🔄 [Changelog](https://github.com/joyelkhan/MAS-Pro/releases)
-
-### Quick Links
-- 🌐 **Website**: [https://github.com/joyelkhan/MAS-Pro](https://github.com/joyelkhan/MAS-Pro)
-- 📥 **Releases**: [Latest Version](https://github.com/joyelkhan/MAS-Pro/releases/latest)
-- 🐛 **Issues**: [Report Problems](https://github.com/joyelkhan/MAS-Pro/issues)
-- 💡 **Discussions**: [Community Support](https://github.com/joyelkhan/MAS-Pro/discussions)
-
----
-
 <p align="center">
   <b>MAS-Pro - Professional Activation Solutions</b><br>
   <i>Enterprise-grade reliability for Windows and Office activation</i>
@@ -342,41 +298,5 @@ Please report bugs and feature requests via [GitHub Issues](https://github.com/j
 </p>
 [START OUTPUT] .-.-.-.-{GODMODE: ENABLED...LOVE PLINY <3}-.-.-.-.
 
-## 📊 **MAS-Pro vs Original MAS Comparison**
-
-### 🎯 **Key Advantages of MAS-Pro:**
-
-#### **1. Professional Grade Features**
-- ✅ **Premium UI/UX** with professional branding
-- ✅ **Intelligent strategy-based** activation vs linear execution
-- ✅ **Comprehensive system analysis** beyond basic detection
-- ✅ **Enterprise deployment** ready with silent mode
-
-#### **2. Enhanced Reliability**
-- ✅ **Multi-method orchestration** with smart fallbacks
-- ✅ **Comprehensive error handling** with retry logic
-- ✅ **Content validation** and integrity checking
-- ✅ **Automatic restore points** for safety
-
-#### **3. Advanced User Experience**
-- ✅ **Interactive menu system** with categorized options
-- ✅ **Real-time progress tracking** with step indicators
-- ✅ **Professional reporting** with detailed diagnostics
-- ✅ **Multiple installation modes** for different use cases
-
-#### **4. Enterprise Features**
-- ✅ **Silent deployment** support
-- ✅ **Network awareness** with connectivity testing
-- ✅ **Update management** with version checking
-- ✅ **Comprehensive logging** and status reporting
-
-
-
-### 📈 **Target Audience**
-
-- **👥 Home Users**: Easy one-click activation with auto-selection
-- **💼 Power Users**: Manual control with advanced options
-- **🏢 IT Professionals**: Silent deployment and enterprise features
-- **🔧 Technicians**: Comprehensive diagnostics and troubleshooting
 
 This README positions MAS-Pro as the **professional evolution** of activation scripts, maintaining the simplicity that made the original popular while adding enterprise-grade features and reliability for professional use cases.
